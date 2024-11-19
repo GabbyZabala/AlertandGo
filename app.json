@@ -22,6 +22,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "scheme": "alertandgo",  
+    "platforms": ["ios", "android", "web"]
   }
 }
