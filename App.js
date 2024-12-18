@@ -1,114 +1,39 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
-import React, { useState } from 'react';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar } from 'react-native';
 
-export default function App() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+// Import your screen components
+import LoginScreen from './Screens/Login';
+import RegisterScreen from './Screens/RegisterAccount';
+import HomeScreen from './Screens/Home';
 
-  const handleLogin = () => {
-    console.log("Logging in with", username, password);
-  };
+// Create a stack navigator
+const Stack = createNativeStackNavigator();
 
-  const handleCreateAccount = () => {
-    console.log("Creating account for", username);
-  };
-
+function App() {
   return (
-    <ImageBackground 
-      source={require('./assets/adaptive-icon.png')} 
-      style={styles.background}
-    >
-      <View style={styles.container}>
-        <Text style={styles.title}>ALERT&GO</Text>
-        <Text style={styles.subtitle}>Bind! Grind! and Good to GO!</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          value={username}
-          onChangeText={setUsername}
+    <NavigationContainer>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <Stack.Navigator initialRouteName="Login">
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ title: 'Login' }}
         />
-        
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={true}
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ title: 'Register' }}
         />
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.buttonLeft} onPress={handleCreateAccount}>
-            <Text style={styles.buttonTextL}>Create New Account</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.buttonRight} onPress={handleLogin}>
-            <Text style={styles.buttonTextR}>Log In</Text>
-          </TouchableOpacity>
-        </View>
-
-        <StatusBar style="auto" />
-      </View>
-    </ImageBackground>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ title: 'Home' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 10, 
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: -1,
-  },
-  subtitle:{
-    fontSize:10,
-    color:'#808',
-    marginBottom:50,
-  },
-  input: {
-    width: '80%',
-    maxWidth:560,
-    height: 40,
-    borderColor: '#000',
-    borderWidth: 1,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.8)', // Added for better readability over the background
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '80%',
-    maxWidth:560,
-    marginTop: 20,
-  },
-  buttonLeft: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    padding: 10,
-    alignItems: 'center',
-    marginRight: 10, 
-  },
-  buttonRight: {
-    flex: 1,
-    backgroundColor: '#000',
-    padding: 10,
-    alignItems: 'center',
-  },
-  buttonTextR: {
-    color: '#fff',
-  },
-  buttonTextL:{
-    color:'#000',
-  },
-});
+export default App;
