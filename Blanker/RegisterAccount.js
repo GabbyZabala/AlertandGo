@@ -1,35 +1,72 @@
 import { StatusBar } from 'expo-status-bar';
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+import { Text, View, TextInput, TouchableOpacity, StyleSheet, ImageBackground, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { Ionicons } from '@expo/vector-icons';
+import * as SQLite from 'expo-sqlite/next';
 
-function RegisterScreen({ navigation }) {
+function RegisterScreen({ navigation, route }) {
   const [DisplayName, setDisplayName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [RetryPassword, setRetryPassword] = useState('');
   const [isRetryPasswordHidden, setIsRetryPasswordHidden] = useState(true);
+  const { db } = route.params;
 
   const BacktoLogIn = () => {
     console.log('Going back to Login');
     navigation.goBack();
   };
 
-  const CreateAccount = () => {
+  const CreateAccount = async () => {
+    if (!DisplayName || !username || !password || !RetryPassword) {
+      Alert.alert('Incomplete Form', 'Please fill in all fields.');
+      return;
+    }
+
+    if (password !== RetryPassword) {
+      Alert.alert('Password Mismatch', 'Passwords do not match.');
+      return;
+    }
+
     console.log('Creating account for', username);
-    // TODO: Add your actual account creation logic here (e.g., database, API call)
-    navigation.navigate('Login');
+    try {
+      const results = await db.execAsync(
+        [
+          {
+            sql: 'INSERT INTO LoginRequireds (Display_Name, User_Name, Password) VALUES (?, ?, ?)',
+            args: [DisplayName, username, password],
+          },
+        ],
+        false
+      );
+
+      const firstQueryResult = results[0];
+      console.log("Rows affected:", firstQueryResult.rowsAffected);
+
+      if (firstQueryResult.rowsAffected > 0) {
+        console.log('Account created successfully');
+        Alert.alert(
+          'Success',
+          'Account created successfully!',
+          [{ text: 'OK', onPress: () => navigation.navigate('Login') }],
+          { cancelable: false }
+        );
+      } else {
+        console.log('Failed to create account');
+        Alert.alert('Failed', 'Failed to create account.');
+      }
+    } catch (error) {
+      console.error('Error creating account:', error);
+      Alert.alert(
+        'Error',
+        'An error occurred while creating the account.'
+      );
+    }
   };
 
   return (
     <ImageBackground
-      source={require('../assets/adaptive-icon.png')} // Corrected path
+      source={require('./assets/adaptive-icon.png')} // Corrected path
       style={styles.background}
     >
       <View style={styles.container}>

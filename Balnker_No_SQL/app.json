@@ -1,13 +1,14 @@
 {
   "expo": {
-    "name": "AlertandGo",
-    "slug": "AlertandGo",
+    "name": "Blanker",
+    "slug": "Blanker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -23,7 +24,8 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "alertandgo",  
-    "platforms": ["ios", "android", "web"]
+    "plugins": [
+      "expo-sqlite"
+    ]
   }
 }

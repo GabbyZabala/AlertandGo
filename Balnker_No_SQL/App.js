@@ -4,9 +4,9 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StatusBar } from 'react-native';
 
 // Import your screen components
-import LoginScreen from './Screens/Login';
-import RegisterScreen from './Screens/RegisterAccount';
-import HomeScreen from './Screens/Home';
+import LoginScreen from './Login';
+import RegisterScreen from './RegisterAccount';
+import HomeScreen from './Home';
 
 // Create a stack navigator
 const Stack = createNativeStackNavigator();
@@ -14,7 +14,7 @@ const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />  
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Login"
