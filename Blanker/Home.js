@@ -11,7 +11,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import HomeStyles from './Styles/HomeStyles';
-import * as SQLite from 'expo-sqlite/next';
+import * as SQLite from 'expo-sqlite';
 
 const TASK_ACTIONS = ['ADD TASK', 'DELETE TASK', 'EDIT TASK'];
 

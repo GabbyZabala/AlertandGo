@@ -9,7 +9,7 @@ import {
   Alert
 } from 'react-native';
 import React, { useState } from 'react';
-import * as SQLite from 'expo-sqlite/next';
+import * as SQLite from 'expo-sqlite';
 
 const DIALOGS = [
   'Welcome to ALERT&GO!',
